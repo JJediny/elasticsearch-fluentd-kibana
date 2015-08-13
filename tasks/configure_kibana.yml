@@ -1,0 +1,5 @@
+---
+- name: Configure Kibana
+  template:
+    src: ../templates/default.json
+    dest: /usr/share/kibana-3.1.0/app/dashboards/default.json

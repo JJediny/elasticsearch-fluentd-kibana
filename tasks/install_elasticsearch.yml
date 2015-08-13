@@ -1,0 +1,20 @@
+---
+- name: Download Elasticsearch
+  sudo: true
+  get_url:  url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.2.deb dest=/tmp/elasticsearch-1.2.2.deb
+
+- name: Install Elasticsearch
+  sudo: true
+  apt: deb=/tmp/elasticsearch-1.2.2.deb
+
+- name: Start Elasticsearch
+  sudo: true
+  service: name=elasticsearch state=started enabled=yes
+
+- name: Secure Elasticsearch
+  sudo: true
+  lineinfile:
+    dest: /etc/elasticsearch/elasticsearch.yml
+    regexp: disable_dynamic
+    line: "script.disable_dynamic: true"
+  notify: restart elasticsearch

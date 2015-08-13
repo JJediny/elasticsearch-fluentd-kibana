@@ -1,0 +1,13 @@
+---
+- name: Download Kibana-3.1.0
+  sudo: true
+  get_url: url=https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz dest=/tmp/kibana-3.1.0.tar.gz
+
+- command: /bin/tar -zxf /tmp/kibana-3.1.0.tar.gz --directory /tmp/
+  sudo: true
+
+- command: /bin/cp -r /tmp/kibana-3.1.0 /usr/share/
+  sudo: true
+
+- command: /bin/ln -s /usr/share/kibana-3.1.0 /usr/share/nginx/html/kibana
+  sudo: true

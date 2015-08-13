@@ -1,0 +1,23 @@
+---
+# tasks file for elasticsearch-fluentd-kibana
+- hosts: log_host_servers
+  tasks:
+    - include: install_prerequisites.yml
+    - include: install_elasticsearch.yml
+    - include: install_nginx.yml
+    - include: configure_nginx.yml
+    - include: install_kibana.yml
+    - include: configure_kibana.yml
+    - include: install_fluentd.yml
+    - include: configure_fluentd_host.yml
+  handlers:
+    - include: ../handlers/main.yml
+
+- hosts: log_client_servers
+  tasks:
+    - include: install_nginx.yml
+    - include: configure_nginx.yml
+    - include: install_fluentd.yml
+    - include: configure_fluentd_client.yml
+  handlers:
+    - include: ../handlers/main.yml

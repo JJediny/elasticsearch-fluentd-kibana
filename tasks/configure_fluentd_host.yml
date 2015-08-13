@@ -1,0 +1,6 @@
+---
+- name: Configure Fluentd Host
+  template:
+    src: ../templates/td-agent.conf.host
+    dest: /etc/td-agent/td-agent.conf
+  notify: restart fluentd

@@ -1,0 +1,33 @@
+---
+- name: Install Nginx
+  apt: pkg=nginx state=present update_cache=yes
+
+- name: Start Nginx
+  sudo: true
+  service: name=nginx state=started enabled=yes
+
+- name: Download Nginx Config
+  sudo: true
+  get_url: url=https://assets.digitalocean.com/articles/fluentd/nginx.conf dest=/etc/nginx/sites-available/default force=yes
+
+- name: Setup Nginx Config | Server Name
+  sudo: true
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    regexp: server_name
+    line: "server_name localhost;"
+
+- name: Setup Nginx Config | Access Log
+  sudo: true
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    regexp: access_log
+    state: absent
+
+- name: Setup Nginx Config | Root
+  sudo: true
+  lineinfile:
+    dest: /etc/nginx/sites-available/default
+    regexp: root
+    line: "root /usr/share/nginx/html;"
+  notify: restart nginx
