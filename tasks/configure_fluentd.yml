@@ -1,0 +1,6 @@
+---
+- name: Configure Fluentd
+  template:
+    src: ../templates/td-agent.yml
+    dest: /etc/td-agent/td-agent.conf
+  notify: restart fluentd

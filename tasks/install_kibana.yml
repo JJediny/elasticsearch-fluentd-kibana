@@ -9,5 +9,5 @@
 - command: /bin/cp -r /tmp/kibana-3.1.0 /usr/share/
   sudo: true
 
-- command: /bin/ln -s /usr/share/kibana-3.1.0 /usr/share/nginx/html/kibana
+- file: src=/usr/share/kibana-3.1.0 dest=/usr/share/nginx/html/kibana state=link
   sudo: true

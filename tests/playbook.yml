@@ -1,0 +1,99 @@
+---
+# tasks file for elasticsearch-fluentd-kibana
+- hosts: log_host_servers
+  vars:
+    fluentd_plugins:
+      - fluent-plugin-elasticsearch
+      - fluent-plugin-record-reformer
+      - fluent-plugin-record-modifier
+    fluentd_sources:
+      - params:
+          type: "forward"
+      - params:
+          type: "http"
+          port: "8888"
+      - params:
+          type: "debug_agent"
+          bind: "127.0.0.1"
+          port: "24230"
+      - params:
+          type: "tail"
+          path: "/var/log/nginx/access.log"
+          pos_file: "/var/log/td-agent/httpd-access.log.pos"
+          tag: "nginx.access"
+          format: "nginx"
+      - params:
+          type: "tail"
+          path: "/var/log/nginx/error.log"
+          pos_file: "/var/log/td-agent/httpd-error.log.pos"
+          tag: "nginx.error"
+          format: "nginx"
+    fluentd_matches:
+      - match: "nginx.**"
+        params:
+          type: "record_modifier"
+          hostname: "${hostname}"
+          tag: "log_with_hostname"
+      - match: "log_with_hostname"
+        params:
+          type: "elasticsearch"
+          logstash_format: "true"
+          flush_interval: "60s"
+      - match: "**"
+        params:
+          type: "elasticsearch"
+  tasks:
+    #- include: ../tasks/install_prerequisites.yml
+    #- include: ../tasks/install_elasticsearch.yml
+    #- include: ../tasks/install_nginx.yml
+    #- include: ../tasks/configure_nginx.yml
+    #- include: ../tasks/install_kibana.yml
+    #- include: ../tasks/configure_kibana.yml
+    #- include: ../tasks/install_fluentd.yml
+    - include: ../tasks/configure_fluentd.yml
+  handlers:
+    - include: ../handlers/main.yml
+
+- hosts: log_client_servers
+  vars:
+    fluentd_plugins:
+      - fluent-plugin-record-modifier
+    fluentd_sources:
+      - params:
+          type: "forward"
+      - params:
+          type: "http"
+          port: "8888"
+      - params:
+          type: "debug_agent"
+          bind: "127.0.0.1"
+          port: "24230"
+      - params:
+          type: "tail"
+          path: "/var/log/nginx/access.log"
+          pos_file: "/var/log/td-agent/httpd-access.log.pos"
+          tag: "nginx.access"
+          format: "nginx"
+      - params:
+          type: "tail"
+          path: "/var/log/nginx/error.log"
+          pos_file: "/var/log/td-agent/httpd-error.log.pos"
+          tag: "nginx.error"
+          format: "nginx"
+    fluentd_matches:
+      - match: "nginx.**"
+        params:
+          type: "record_modifier"
+          hostname: "${hostname}"
+          tag: "log_with_hostname"
+      - match: "log_with_hostname"
+        params:
+          type: "forward"
+          flush_interval: "60s"
+        server_params:
+          host: "{{ hostvars[groups['log_host_servers'][0]]['ansible_eth0']['ipv4']['address']}}"
+  tasks:
+    #- include: ../tasks/install_fluentd.yml
+    - include: ../tasks/configure_fluentd.yml
+  handlers:
+    - include: ../handlers/main.yml

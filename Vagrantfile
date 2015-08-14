@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision 'ansible' do |ansible|
     ansible.sudo = true
-    ansible.playbook = 'tests/main.yml'
+    ansible.playbook = 'tests/playbook.yml'
     ansible.limit = 'all'
     ansible.verbose = 'v'
 

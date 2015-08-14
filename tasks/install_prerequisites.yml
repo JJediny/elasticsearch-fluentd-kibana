@@ -1,4 +1,7 @@
 ---
+- name: Apt Update Cache
+  apt: update_cache=yes
+
 - name: Install make
   apt: pkg=make state=present update_cache=yes
 

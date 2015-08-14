@@ -11,6 +11,5 @@
   sudo: true
   service: name=td-agent state=started enabled=yes
 
-- command: /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-elasticsearch
-- command: /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-record-reformer
-- command: /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-record-modifier
+- command: /opt/td-agent/embedded/bin/fluent-gem install {{ item }}
+  with_items: fluentd_plugins
