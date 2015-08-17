@@ -13,3 +13,9 @@
 
 - command: /opt/td-agent/embedded/bin/fluent-gem install {{ item }}
   with_items: fluentd_plugins
+
+- name: Configure Fluentd
+  template:
+    src: ../templates/td-agent.yml
+    dest: /etc/td-agent/td-agent.conf
+  notify: restart fluentd

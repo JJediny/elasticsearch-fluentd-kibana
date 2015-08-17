@@ -31,3 +31,5 @@
     regexp: root
     line: "root /usr/share/nginx/html;"
   notify: restart nginx
+
+- file: path=/var/log/nginx state=directory mode=0645

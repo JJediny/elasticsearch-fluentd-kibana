@@ -1,2 +1,5 @@
 ---
 # defaults file for elasticsearch-fluentd-kibana
+fluentd_plugins: []
+fluentd_sources: []
+fluentd_matches: []
