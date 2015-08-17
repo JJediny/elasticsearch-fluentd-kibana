@@ -43,13 +43,13 @@
         params:
           type: "elasticsearch"
   tasks:
-    #- include: ../tasks/install_prerequisites.yml
-    #- include: ../tasks/install_elasticsearch.yml
-    #- include: ../tasks/install_nginx.yml
-    #- include: ../tasks/configure_nginx.yml
-    #- include: ../tasks/install_kibana.yml
-    #- include: ../tasks/configure_kibana.yml
-    #- include: ../tasks/install_fluentd.yml
+    - include: ../tasks/install_prerequisites.yml
+    - include: ../tasks/install_elasticsearch.yml
+    - include: ../tasks/install_nginx.yml
+    - include: ../tasks/configure_nginx.yml
+    - include: ../tasks/install_kibana.yml
+    - include: ../tasks/configure_kibana.yml
+    - include: ../tasks/install_fluentd.yml
     - include: ../tasks/configure_fluentd.yml
   handlers:
     - include: ../handlers/main.yml
@@ -93,7 +93,7 @@
         server_params:
           host: "{{ hostvars[groups['log_host_servers'][0]]['ansible_eth0']['ipv4']['address']}}"
   tasks:
-    #- include: ../tasks/install_fluentd.yml
+    - include: ../tasks/install_fluentd.yml
     - include: ../tasks/configure_fluentd.yml
   handlers:
     - include: ../handlers/main.yml

@@ -12,7 +12,11 @@ Requirements
 Role Variables
 --------------
 
-* none yet
+fluentd_plugins : optional : should contain fluentd plugins to be installed
+
+fluentd_sources : optional : should contain fluentd sources to be configured
+
+fluentd_matches : optional : should contain fluentd matches to be configured
 
 License
 -------

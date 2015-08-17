@@ -3,6 +3,8 @@
 - hosts: log_host_servers
   vars:
     fluentd_plugins: []
+    fluentd_sources: []
+    fluentd_matches: []
   tasks:
     - include: install_prerequisites.yml
     - include: install_elasticsearch.yml
@@ -11,15 +13,17 @@
     - include: install_kibana.yml
     - include: configure_kibana.yml
     - include: install_fluentd.yml
-    - include: configure_fluentd_host.yml
+    - include: configure_fluentd.yml
   handlers:
     - include: ../handlers/main.yml
 
 - hosts: log_client_servers
   vars:
     fluentd_plugins: []
+    fluentd_sources: []
+    fluentd_matches: []
   tasks:
     - include: install_fluentd.yml
-    - include: configure_fluentd_client.yml
+    - include: configure_fluentd.yml
   handlers:
     - include: ../handlers/main.yml
