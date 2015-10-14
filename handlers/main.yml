@@ -17,3 +17,9 @@
 
 - name: restart fluentd
   service: name=td-agent state=restarted
+
+- name: start kibana
+  service: name=kibana4 state=started
+
+- name: restart kibana
+  service: name=kibana4 state=restarted

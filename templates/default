@@ -1,0 +1,15 @@
+server {
+  listen *:80;
+  server_name localhost;
+
+  location / {
+    rewrite ^/(.*) /$1 break;
+    proxy_pass http://localhost:5601;
+    proxy_redirect http://localhost:5601 https://localhost;
+    proxy_set_header  X-Real-IP  $remote_addr;
+    proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header  Host $http_host;
+    auth_basic "Restricted";
+    auth_basic_user_file /opt/kibana4/user.pwd;
+  }
+}

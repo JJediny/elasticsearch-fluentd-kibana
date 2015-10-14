@@ -1,18 +1,42 @@
 ---
-- name: Download Kibana-3.1.0
+- name: Download Kibana-4.1.2
   sudo: true
-  get_url: url=https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz dest=/tmp/kibana-3.1.0.tar.gz
+  get_url: url=https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz dest=/tmp/kibana-4.1.2-linux-x64.tar.gz
 
-- command: /bin/tar -zxf /tmp/kibana-3.1.0.tar.gz --directory /tmp/
-  sudo: true
-
-- command: /bin/cp -r /tmp/kibana-3.1.0 /usr/share/
+- command: /bin/tar -zxf /tmp/kibana-4.1.2-linux-x64.tar.gz --directory /tmp/
   sudo: true
 
-- file: src=/usr/share/kibana-3.1.0 dest=/usr/share/nginx/html/kibana state=link
+- command: /bin/rm -rf /opt/kibana4
   sudo: true
 
-- name: Configure Kibana
+- command: /bin/mv /tmp/kibana-4.1.2-linux-x64 /opt/kibana4
+  sudo: true
+
+- name: Setup Kibana Service
   template:
-    src: ../templates/kibana_default.json
-    dest: /usr/share/kibana-3.1.0/app/dashboards/default.json
+    src: ../templates/kibana4
+    dest: /etc/init.d/
+
+- command: chmod +x /etc/init.d/kibana4
+  sudo: true
+
+- command: update-rc.d kibana4 defaults 96 9
+  sudo: true
+  notify: restart kibana
+
+- name: Install apache2-utils
+  sudo: true
+  apt: pkg=apache2-utils state=present
+
+- name: Setup Kibana on Nginx
+  sudo: true
+  template:
+    src: ../templates/default
+    dest: /etc/nginx/sites-available/default
+
+- name: Setup Kibana Auth on Nginx
+  sudo: true
+  template:
+    src: ../templates/user.pwd
+    dest: /opt/kibana4/user.pwd
+  notify: restart nginx
