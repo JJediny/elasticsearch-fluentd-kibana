@@ -3,3 +3,7 @@
 fluentd_plugins: []
 fluentd_sources: []
 fluentd_matches: []
+
+nginx_user_pwd: ""
+nginx_ssl_crt: ""
+nginx_ssl_key: ""

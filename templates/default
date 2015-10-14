@@ -1,6 +1,15 @@
 server {
   listen *:80;
   server_name localhost;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen *:443;
+  server_name localhost;
+  ssl on;
+  ssl_certificate /opt/kibana4/ssl/ssl.crt;
+  ssl_certificate_key /opt/kibana4/ssl/ssl.key;
 
   location / {
     rewrite ^/(.*) /$1 break;
@@ -13,3 +22,4 @@ server {
     auth_basic_user_file /opt/kibana4/user.pwd;
   }
 }
+

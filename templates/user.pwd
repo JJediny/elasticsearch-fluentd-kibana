@@ -1,1 +1,1 @@
-admin:$apr1$Qct6l9a7$rb.3WbVa7X/78/yVHyIwv/
+{{ nginx_user_pwd }}

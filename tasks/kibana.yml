@@ -39,4 +39,21 @@
   template:
     src: ../templates/user.pwd
     dest: /opt/kibana4/user.pwd
+
+- name: Create SSL directory
+  sudo: true
+  file:
+    state=directory
+    path=/opt/kibana4/ssl
+    mode=600
+
+- name: Setup SSL on Nginx for Kibana
+  sudo: true
+  template:
+    src: ../templates/{{ item }}
+    dest: /opt/kibana4/ssl/
+    mode: 600
+  with_items: 
+     - ssl.crt
+     - ssl.key
   notify: restart nginx
