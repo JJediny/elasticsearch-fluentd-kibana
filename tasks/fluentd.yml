@@ -12,10 +12,12 @@
   service: name=td-agent state=started enabled=yes
 
 - name: Install Fluentd Plugins
+  sudo: true
   command: /opt/td-agent/embedded/bin/fluent-gem install {{ item }}
   with_items: fluentd_plugins
 
 - name: Configure Fluentd
+  sudo: true
   template:
     src: ../templates/td-agent.yml
     dest: /etc/td-agent/td-agent.conf

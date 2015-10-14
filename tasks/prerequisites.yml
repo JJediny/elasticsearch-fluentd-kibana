@@ -1,12 +1,16 @@
 ---
 - name: Apt Update Cache
+  sudo: true
   apt: update_cache=yes
 
 - name: Install make
+  sudo: true
   apt: pkg=make state=present update_cache=yes
 
 - name: Install libcurl4-gnutls-dev
+  sudo: true
   apt: pkg=make state=present
 
 - name: Install Java
+  sudo: true
   apt: pkg=openjdk-7-jre-headless state=present

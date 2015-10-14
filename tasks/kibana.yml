@@ -13,6 +13,7 @@
   sudo: true
 
 - name: Setup Kibana Service
+  sudo: true
   template:
     src: ../templates/kibana4
     dest: /etc/init.d/
@@ -53,7 +54,7 @@
     src: ../templates/{{ item }}
     dest: /opt/kibana4/ssl/
     mode: 600
-  with_items: 
+  with_items:
      - ssl.crt
      - ssl.key
   notify: restart nginx

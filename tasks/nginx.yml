@@ -1,5 +1,6 @@
 ---
 - name: Install Nginx
+  sudo: true
   apt: pkg=nginx state=present
 
 - name: Start Nginx
@@ -7,3 +8,4 @@
   service: name=nginx state=started enabled=yes
 
 - file: path=/var/log/nginx state=directory mode=0645
+  sudo: true
