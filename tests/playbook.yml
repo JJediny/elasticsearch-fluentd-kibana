@@ -35,6 +35,8 @@
       - match: "**"
         params:
           type: "elasticsearch"
+          logstash_format: "true"
+          include_tag_key: "true"
     nginx_user_pwd: "admin:$apr1$Qct6l9a7$rb.3WbVa7X/78/yVHyIwv/"
     nginx_ssl_crt: |+
       -----BEGIN CERTIFICATE-----
@@ -98,6 +100,7 @@
           type: "record_modifier"
           hostname: "${hostname}"
           tag: "log_with_hostname"
+          include_tag_key: "true"
       - match: "log_with_hostname"
         params:
           type: "forward"

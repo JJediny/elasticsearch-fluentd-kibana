@@ -21,4 +21,8 @@
   template:
     src: ../templates/td-agent.yml
     dest: /etc/td-agent/td-agent.conf
-  notify: restart fluentd
+
+- name: Restart Fluentd
+  sudo: true
+  command: service td-agent restart
+  #notify: restart fluentd
