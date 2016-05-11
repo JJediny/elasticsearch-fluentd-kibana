@@ -14,29 +14,33 @@
           path: "/var/log/nginx/access.log"
           pos_file: "/var/log/td-agent/httpd-access.log.pos"
           tag: "nginx.access"
-          format: "nginx"
+          format: '/^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$/'
+          time_format: "%d/%b/%Y:%H:%M:%S %z"
       - params:
           type: "tail"
           path: "/var/log/nginx/error.log"
           pos_file: "/var/log/td-agent/httpd-error.log.pos"
           tag: "nginx.error"
-          format: "nginx"
+          format: '/^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^\"]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)")?$/'
+          time_format: "%d/%b/%Y:%H:%M:%S %z"
     fluentd_matches:
-      - match: "nginx.**"
-        params:
-          type: "record_modifier"
-          hostname: "${hostname}"
-          tag: "log_with_hostname"
-      - match: "log_with_hostname"
+      - match: "nginx.access"
         params:
           type: "elasticsearch"
+          include_tag_key: "true"
           logstash_format: "true"
-          flush_interval: "60s"
+          logstash_prefix: "nginx.access"
+      - match: "nginx.error"
+        params:
+          type: "elasticsearch"
+          include_tag_key: "true"
+          logstash_format: "true"
+          logstash_prefix: "nginx.error"
       - match: "**"
         params:
           type: "elasticsearch"
-          logstash_format: "true"
           include_tag_key: "true"
+          logstash_format: "true"
     nginx_user_pwd: "admin:$apr1$Qct6l9a7$rb.3WbVa7X/78/yVHyIwv/"
     nginx_ssl_crt: |+
       -----BEGIN CERTIFICATE-----
