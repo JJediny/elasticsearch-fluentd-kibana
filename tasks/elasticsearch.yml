@@ -23,10 +23,6 @@
     line: "network.host: localhost"
   lineinfile:
     dest: /etc/elasticsearch/elasticsearch.yml
-    regexp: bootstrap.mlockall
-    line: "bootstrap.mlockall: true"
-  lineinfile:
-    dest: /etc/elasticsearch/elasticsearch.yml
     regexp: action.disable_delete_all_indices
     line: "action.disable_delete_all_indices: true"
   notify: restart elasticsearch
