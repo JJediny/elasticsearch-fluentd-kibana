@@ -12,6 +12,8 @@ Requirements
 Role Variables
 --------------
 
+elasticsearch_heap_size : optional : should contain elasticsearch heap size
+
 fluentd_plugins : optional : should contain fluentd plugins to be installed
 
 - fluent-plugin-elasticsearch
