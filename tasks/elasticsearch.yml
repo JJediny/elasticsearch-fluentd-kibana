@@ -1,7 +1,7 @@
 ---
 - name: Download Elasticsearch
   sudo: true
-  get_url:  url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb dest=/tmp/elasticsearch-1.7.2.deb checksum=md5:6d58c37257f60a59239a974605c115fb
+  get_url:  url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb dest=/tmp/elasticsearch-1.7.2.deb
 
 - name: Install Elasticsearch
   sudo: true

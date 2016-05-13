@@ -1,7 +1,7 @@
 ---
 - name: Download Fluentd
   sudo: true
-  get_url: url=http://packages.treasuredata.com/2/ubuntu/trusty/pool/contrib/t/td-agent/td-agent_2.0.4-0_amd64.deb dest=/tmp/td-agent_2.0.4-0_amd64.deb checksum=md5:6076812ed2806997c6d059584ad23d22
+  get_url: url=http://packages.treasuredata.com/2/ubuntu/trusty/pool/contrib/t/td-agent/td-agent_2.0.4-0_amd64.deb dest=/tmp/td-agent_2.0.4-0_amd64.deb
 
 - name: Install Fluentd
   sudo: true

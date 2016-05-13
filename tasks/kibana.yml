@@ -1,7 +1,7 @@
 ---
 - name: Download Kibana-4.1.2
   sudo: true
-  get_url: url=https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz dest=/tmp/kibana-4.1.2-linux-x64.tar.gz checksum=md5:2210a838f9c7171d1385b0825ba19382
+  get_url: url=https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz dest=/tmp/kibana-4.1.2-linux-x64.tar.gz
 
 - command: /bin/tar -zxf /tmp/kibana-4.1.2-linux-x64.tar.gz --directory /tmp/
   sudo: true
